@@ -1,0 +1,26 @@
+{
+  "name": "twistersfury/array-helpers",
+  "homepage":"https://github.com/twistersfury/array-helpers",
+  "keywords": ["php","array","helper","wrapper","oop", "object oriented"],
+  "type":"library",
+  "description": "Array Helpers For PHP",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Twister's Fury",
+      "email": "info@twistersfury.com"
+    }
+  ],
+  "autoload" : {
+    "psr-4" : {
+      "TwistersFury\\Helpers\\Arrays\\" : "src"
+    }
+  },
+  "require" : {
+    "php": ">=5.3.8"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.4",
+    "humbug/humbug": "~1.0-dev"
+  }
+}
