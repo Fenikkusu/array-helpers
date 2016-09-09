@@ -80,6 +80,18 @@
             $this->assertTrue($this->testSubject->getYetAnother());
         }
 
+        public function testCountAndEmpty() {
+            $this->testSubject = new ArrayWrapper([]);
+
+            $this->assertEquals(0, $this->testSubject->count());
+            $this->assertTrue($this->testSubject->isEmpty());
+
+            $this->testSubject->setProperty('something', 'else');
+
+            $this->assertEquals(1, $this->testSubject->count());
+            $this->assertFalse($this->testSubject->isEmpty());
+        }
+
         /**
          * @expectedException \RuntimeException
          */

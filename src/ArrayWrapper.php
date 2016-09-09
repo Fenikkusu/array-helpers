@@ -150,6 +150,24 @@
         }
 
         /**
+         * Check If Any Items Exist In
+         *
+         * @return bool
+         */
+        public function isEmpty() {
+            return empty($this->arrayData);
+        }
+
+        /**
+         * Get Total Items In Wrapper
+         *
+         * @return int
+         */
+        public function count() {
+            return count($this->arrayData);
+        }
+
+        /**
          * Normalizes Property Name
          *
          * @param string $propertyName
@@ -163,19 +181,35 @@
 
         /********** Array Access Methods ***********/
 
+        /**
+         * @param mixed $offset
+         *
+         * @return bool
+         */
         public function offsetExists($offset) {
             return $this->hasProperty($offset);
         }
 
+        /**
+         * @param mixed $offset
+         * @return mixed
+         */
         public function offsetGet($offset) {
             return $this->getProperty($offset);
         }
 
+        /**
+         * @param mixed $offset
+         * @param mixed $value
+         */
         public function offsetSet($offset, $value) {
             $this->setProperty($offset, $value);
         }
 
+        /**
+         * @param mixed $offset
+         */
         public function offsetUnset($offset) {
-            return $this->removeProperty($offset);
+            $this->removeProperty($offset);
         }
     }
