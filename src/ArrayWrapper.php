@@ -24,12 +24,18 @@
         /**
          * @var array
          */
-        protected $arrayData = NULL;
+        protected $arrayData = [];
 
         protected $classData = NULL;
 
         public function __construct(array $arrayData) {
-            $this->arrayData = $arrayData;
+            $this->mergeConfig($arrayData);
+        }
+
+        public function mergeConfig(array $arrayData) {
+            $this->arrayData = array_merge($this->arrayData, $arrayData);
+
+            return $this;
         }
 
         public function __call($methodName, $methodArgs) {

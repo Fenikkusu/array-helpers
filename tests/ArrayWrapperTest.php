@@ -25,6 +25,13 @@
             );
         }
 
+        public function testMergeConfig() {
+            $this->assertFalse($this->testSubject->hasProperty('other'));
+            $this->assertSame($this->testSubject, $this->testSubject->mergeConfig(['something' => 'other', 'other' => 'something']));
+            $this->assertTrue($this->testSubject->hasProperty('other'));
+            $this->assertEquals('other', $this->testSubject->getProperty('something'));
+        }
+
         /**
          * @covers \TwistersFury\Helpers\Arrays\ArrayWrapper::getProperty()
          * @covers \TwistersFury\Helpers\Arrays\ArrayWrapper::hasProperty()
