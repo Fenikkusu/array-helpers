@@ -32,12 +32,29 @@
             $this->mergeConfig($arrayData);
         }
 
+        /**
+         * Merges The Given Array Into The Configuration.
+         *
+         * @param array $arrayData
+         *
+         * @return $this
+         */
         public function mergeConfig(array $arrayData) {
             $this->arrayData = array_merge($this->arrayData, $arrayData);
+            $this->classData = [];
 
             return $this;
         }
 
+        /**
+         * Magic Method For Allowing getter/setter access.
+         *
+         * @param string $methodName
+         * @param array[mixed] $methodArgs
+         *
+         * @return bool|mixed|null|\TwistersFury\Helpers\Arrays\ArrayWrapper
+         * @throws \RuntimeException
+         */
         public function __call($methodName, $methodArgs) {
             if (!isset($methodArgs[0])) {
                 $methodArgs[0] = NULL;
@@ -65,10 +82,24 @@
             throw new \RuntimeException('Invalid Method: ' . $methodName);
         }
 
+        /**
+         * Returns if the Property Exists/Is Stored.
+         * @param string $propertyName
+         *
+         * @return bool
+         */
         public function hasProperty($propertyName) {
             return array_key_exists($this->prepareKey($propertyName), $this->arrayData);
         }
 
+        /**
+         * Returns Property or Given Default if Property Does Not Exist.
+         *
+         * @param string $propertyName
+         * @param null|mixed $defaultValue
+         *
+         * @return mixed|static
+         */
         public function getProperty($propertyName, $defaultValue = NULL) {
             $propertyName = $this->prepareKey($propertyName);
             if (!$this->hasProperty($propertyName)) {
@@ -89,12 +120,27 @@
             return $classValue;
         }
 
+        /**
+         * Updates/Sets Given Property
+         *
+         * @param string $propertyName
+         * @param mixed $propertyValue
+         *
+         * @return $this
+         */
         public function setProperty($propertyName, $propertyValue) {
             $this->removeProperty($propertyName)->arrayData[$this->prepareKey($propertyName)] = $propertyValue;
 
             return $this;
         }
 
+        /**
+         * Removes Given Property
+         *
+         * @param string $propertyName
+         *
+         * @return $this
+         */
         public function removeProperty($propertyName) {
             $propertyName = $this->prepareKey($propertyName);
             unset($this->arrayData[$propertyName]);
@@ -103,10 +149,19 @@
             return $this;
         }
 
+        /**
+         * Normalizes Property Name
+         *
+         * @param string $propertyName
+         *
+         * @return mixed
+         */
         protected function prepareKey($propertyName) {
             //NOTE: Additional str_replace Is For Humbug/Testing Reasons.
             return str_replace('+', '_', strtolower(trim(preg_replace('#([A-Z]|[0-9]+)#', "+$1", $propertyName), '+')));
         }
+
+        /********** Array Access Methods ***********/
 
         public function offsetExists($offset) {
             return $this->hasProperty($offset);
